@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 
-import pinoHttp  from 'pino-http';
+import pinoHttp from 'pino-http';
 const app = express();
 
 app.use(express.json());
@@ -30,8 +30,10 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  const isDev = process.env.NODE_ENV === 'development';
   res.status(500).json({
     message: err.message,
+    ...(isDev && { stack: err.stack }),
   });
 });
 app.listen(PORT, () => {
