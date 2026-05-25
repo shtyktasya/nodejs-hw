@@ -11,14 +11,18 @@ const app = express();
 
 const PORT = process.env.PORT ?? 3000;
 
+app.use(logger);
 app.use(express.json());
 app.use(cors());
-app.use(logger);
 app.use('/notes', notesRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-await connectMongoDB();
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const startServer = async () => {
+  await connectMongoDB();
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+};
+
+startServer();
