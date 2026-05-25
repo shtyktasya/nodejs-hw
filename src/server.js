@@ -17,18 +17,14 @@ app.get('/test', (req, res) => {
   res.json({ message: 'Server is working!' });
 });
 
-console.log('✅ Server.js is loading...');
-
-// Динамічний імпорт з детальним логуванням
+// Підключаємо роути
 import('./routes/notesRoutes.js')
   .then((module) => {
-    const notesRoutes = module.default;
-    app.use('/notes', notesRoutes);
+    app.use('/notes', module.default);
     console.log('✅ Notes routes loaded successfully');
   })
   .catch((error) => {
-    console.error('❌ CRITICAL ERROR loading notesRoutes:', error.message);
-    console.error(error.stack);
+    console.error('❌ Failed to load notesRoutes:', error.message);
   });
 
 app.use(notFoundHandler);
