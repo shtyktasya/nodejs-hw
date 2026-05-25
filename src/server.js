@@ -5,7 +5,7 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
-import notesRoutes from './routes/notesRoutes.js';   // ← синхронний імпорт
+import notesRoutes from './routes/notesRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -18,7 +18,7 @@ app.get('/test', (req, res) => {
   res.json({ message: 'Server is working!' });
 });
 
-app.use('/notes', notesRoutes);   // ← тепер синхронно
+app.use('/notes', notesRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
