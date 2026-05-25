@@ -13,19 +13,23 @@ app.use(logger);
 app.use(express.json());
 app.use(cors());
 
-// Тестовий маршрут
-app.get('/test', (req, res) => res.json({ message: 'OK' }));
+app.get('/test', (req, res) => {
+  res.json({ message: 'Server is working!' });
+});
 
-// ←←←←←←←←←←←←←←←←←←←←←←←←←
-try {
-  const notesRoutes = (await import('./routes/notesRoutes.js')).default;
-  app.use('/notes', notesRoutes);
-  console.log('✅ Notes routes loaded successfully');
-} catch (error) {
-  console.error('❌ Failed to load notesRoutes:', error.message);
-  console.error(error);
-}
-// ←←←←←←←←←←←←←←←←←←←←←←←←←
+console.log('✅ Server.js is loading...');
+
+// Динамічний імпорт з детальним логуванням
+import('./routes/notesRoutes.js')
+  .then((module) => {
+    const notesRoutes = module.default;
+    app.use('/notes', notesRoutes);
+    console.log('✅ Notes routes loaded successfully');
+  })
+  .catch((error) => {
+    console.error('❌ CRITICAL ERROR loading notesRoutes:', error.message);
+    console.error(error.stack);
+  });
 
 app.use(notFoundHandler);
 app.use(errorHandler);
