@@ -8,19 +8,13 @@ import { errorHandler } from './middleware/errorHandler.js';
 import notesRoutes from './routes/notesRoutes.js';
 
 const app = express();
+
 const PORT = process.env.PORT ?? 3000;
 
 app.use(logger);
 app.use(express.json());
 app.use(cors());
-
-// Тестовий маршрут для діагностики
-app.get('/test', (req, res) => {
-  res.json({ message: 'Server is working!' });
-});
-
 app.use('/notes', notesRoutes);
-
 app.use(notFoundHandler);
 app.use(errorHandler);
 
