@@ -18,8 +18,6 @@ router.post('/login', celebrate(loginUserSchema), loginUser);
 router.post('/refresh', refreshUserSession);
 router.post('/logout', logoutUser);
 
-router.get('/ping', (req, res) => {
-  res.json({ ok: true });
-});
+
 
 export default router;
