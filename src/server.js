@@ -27,8 +27,8 @@ app.get('/test', (req, res) => {
 
 app.use('/auth', authRoutes);
 app.use('/notes', notesRoutes);
-app.use(errors());
 app.use(notFoundHandler);
+app.use(errors());
 app.use(errorHandler);
 
 const startServer = async () => {
