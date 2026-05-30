@@ -8,9 +8,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASSWORD,
     secure: Number(process.env.SMTP_PORT) === 465,
   },
-  tls: {
-    rejectUnauthorized: false
-  },
+ 
 });
 
 export const sendMail = async (options) => {
