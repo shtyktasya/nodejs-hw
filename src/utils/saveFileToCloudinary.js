@@ -8,17 +8,28 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const saveFileToCloudinary = (buffer) => {
+export const saveFileToCloudinary = (buffer, userId) => {
+  const options = {
+    folder: 'notes-app/avatars',
+    public_id: `avatar_${userId}`,
+    resource_type: 'image',
+    overwrite: true,
+    unique_filename: false,
+    transformation: [
+      { width: 500, height: 500, crop: 'fill', gravity: 'auto' },
+      { fetch_format: 'auto', quality: 'auto' },
+    ],
+  };
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
+      options,
       (error, result) => {
-        if (error) {
-          return reject(error);
-        }
+      if (error) {
+        return reject(error);
+      }
 
-        resolve(result);
-      },
-    );
+      resolve(result);
+    });
 
     const stream = Readable.from(buffer);
     stream.pipe(uploadStream);
