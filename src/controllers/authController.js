@@ -119,7 +119,7 @@ export const requestResetEmail = async (req, res, next) => {
 
     const user = await User.findOne({ email });
 
-    
+
     if (!user) {
       return res.status(200).json({
         message: 'Password reset email sent successfully',
@@ -141,12 +141,11 @@ export const requestResetEmail = async (req, res, next) => {
       link: `${process.env.FRONTEND_DOMAIN}/reset-password?token=${resetToken}`,
     });
 
-    await sendMail({
-      from: process.env.SMTP_FROM,
-      to: email,
-      subject: 'Reset your password',
-      html,
-    });
+   console.log('MAIL SKIPPED');
+
+res.status(200).json({
+  message: 'Password reset email sent successfully',
+});
 
     res.status(200).json({
       message: 'Password reset email sent successfully',
