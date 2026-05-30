@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendMail = async (options) => {
-  // Якщо є BREVO_API_KEY — використовуємо Brevo API (рекомендовано)
+
   if (process.env.BREVO_API_KEY) {
     try {
       console.log('📧 Відправка через Brevo API...');
@@ -45,7 +45,7 @@ export const sendMail = async (options) => {
     }
   }
 
-  // Якщо BREVO_API_KEY немає — fallback на старий SMTP
+
   console.log('📧 Відправка через SMTP (Nodemailer)...');
   return await transporter.sendMail(options);
 };
