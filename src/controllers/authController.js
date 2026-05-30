@@ -141,14 +141,12 @@ export const requestResetEmail = async (req, res, next) => {
       link: `${process.env.FRONTEND_DOMAIN}/reset-password?token=${resetToken}`,
     });
 
-   const info = await sendMail({
-  from: process.env.SMTP_FROM,
-  to: email,
-  subject: 'Reset your password',
-  html,
-});
-
-console.log(info);
+    await sendMail({
+      from: process.env.SMTP_FROM,
+      to: email,
+      subject: 'Reset your password',
+      html,
+    });
 
     res.status(200).json({
       message: 'Password reset email sent successfully',
