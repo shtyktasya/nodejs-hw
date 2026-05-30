@@ -141,11 +141,14 @@ export const requestResetEmail = async (req, res, next) => {
       link: `${process.env.FRONTEND_DOMAIN}/reset-password?token=${resetToken}`,
     });
 
-   console.log('MAIL SKIPPED');
-
-res.status(200).json({
-  message: 'Password reset email sent successfully',
+   const info = await sendMail({
+  from: process.env.SMTP_FROM,
+  to: email,
+  subject: 'Reset your password',
+  html,
 });
+
+console.log(info);
 
     res.status(200).json({
       message: 'Password reset email sent successfully',
